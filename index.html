@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tamilkumaran Chandrasekaran - Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom colors for a consistent theme */
+    :root {
+        --dark-bg: #1A1A1A;
+        --very-dark-bg: #111111;
+        --text-color: #D9D9D9;
+        --accent-yellow: #FFD700;
+        --border-color: #333333;
+    }
+
+    /* Font + base */
+    body {
+        font-family: 'Interstate', sans-serif;
+        font-size: 16px;
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Reused original card styles */
+    .card { background-color: var(--dark-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display:flex; flex-direction:column; gap:.5rem; }
+    .Arrowframer { align-content:center; align-items:center; aspect-ratio:1/1; bottom:24px; display:flex; flex:none; flex-direction:row; gap:0px; height:48px; justify-content:center; overflow:hidden; padding:0; position:absolute; right:32px; width:48px; }
+    .arrow-button { background-color: var(--dark-bg); border: 1px solid var(--border-color); border-radius: 9999px; display:flex; justify-content:center; align-items:center; color: var(--text-color); font-size: 1.25rem; cursor: pointer; flex-shrink:0; padding: 8px; }
+    .arrow-button:hover { background-color: #333333; }
+    .arrow-circle { background-color:#3A3A3A; border-radius:50%; width:36px; height:36px; display:flex; justify-content:center; align-items:center; cursor:pointer; }
+    .arrow-circle:hover { background-color:#4A4A4A; }
+    .arrow-circle svg { width:16px; height:16px; }
+
+    .software-icon-box { background-color: var(--dark-bg); color: var(--text-color); font-size: .875rem; font-weight:500; display:flex; align-items:center; justify-content:center; padding:6px; border-radius:8px; width:36px; height:36px; }
+    .software-icon-box img { width:24px; height:24px; object-fit:contain; }
+    .software-icon-box2 { background-color: var(--dark-bg); color: var(--text-color); font-size:.875rem; font-weight:500; display:flex; padding:10px; align-items:center; justify-content:center; border-radius:8px; }
+    .software-icon-box2 img { width:57px; height:57px; object-fit:contain; }
+
+    /* Original vertical scroll animation (desktop) */
+    .scroll-auto-vertical { animation: scrollUp 20s linear infinite; }
+    @keyframes scrollUp { 0%{ transform: translateY(0);} 100%{ transform: translateY(-50%);} }
+    .scroll-container:hover .scroll-auto-vertical { animation-play-state: paused; }
+
+    /* Default left-section layout (desktop) */
+    .left-column-section { flex-grow: 1; display:flex; flex-direction:row; gap:1rem; align-items:stretch; }
+    .left-column-section > div { display:flex; flex-direction:column; }
+
+    /* ------------------------ Mobile responsive rules ------------------------ */
+    @media (max-width: 1023px) {
+      
+        /* 1. FIX: Set main frame to full viewport height and prevent page scroll */
+        .main-frame { 
+            height: auto !important; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; /* Stop page scroll on the main element */
+            padding: 20px; 
+        }
+        
+        /* 2. FIX: Define the fixed footer's explicit height and position */
+        .right-column-fixed { 
+            /* The container itself has 8px top/bottom padding */
+            padding: 10px 0; 
+            height: calc(15vh + 40px); /* 15vh (image height) + 16px (8px top + 8px bottom padding) */
+            
+            position: fixed; 
+            left:0; 
+            bottom:0; 
+            width:100vw; 
+            background:var(--very-dark-bg); 
+            border-top:1px solid var(--border-color); 
+            z-index:60; 
+            display:flex; 
+            align-items:center; 
+            overflow:hidden; 
+        }
+        
+        /* 3. FIX: Set scrollable content height, overflow, and PADDING FIX */
+        .left-column-mobile { 
+            /* The content area takes all available height */
+            height: auto !important; 
+            flex-grow: 1; 
+            overflow-y: auto !important; /* This is the element that scrolls */
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch; 
+            
+            /* CRITICAL FIX: The padding-bottom must exactly match the fixed footer's height */
+            padding-bottom: calc(15vh + 16px) !important; 
+            
+            /* Ensure gap is maintained at the bottom */
+            gap: 1rem !important; 
+        }
+        
+        /* FIX: Remove fixed max-height that causes overlap when content stacks */
+        .left-column-section {
+            max-height: none !important;
+        }
+
+        /* The image height for the 15vh calculation */
+        .thumb-strip img { 
+            height: 15vh; /* Keep the 15vh base height for calculation */
+            width: auto; 
+            border-radius:10px; 
+            flex-shrink:0; 
+            object-fit:cover; 
+        }
+
+        /* 4. MOBILE ORDERING (Stack: 1, 2, 3, 4, 5, 6) */
+        .mobile-order-1 { order: 1; }
+        .mobile-order-2 { order: 2; }
+        .mobile-order-3 { order: 3; }
+        .mobile-order-4 { order: 4; }
+        .mobile-order-5 { order: 5; }
+        .mobile-order-6 { order: 6; }
+        
+        .thumb-strip { display:flex; flex-direction:row; gap:20px; padding-left:14px; }
+        .thumb-auto { animation: thumbAuto 5s linear infinite; }
+        .thumb-auto:hover, .thumb-auto.touching { animation-play-state: paused; }
+        @keyframes thumbAuto { 0%{ transform: translateX(0); } 100%{ transform: translateX(-50%); } }
+
+        .right-column-desktop { display:none; }
+        .main-aspect-lg { aspect-ratio: auto !important; }
+    }
+
+    /* Desktop keep original look */
+    @media (min-width: 1024px) {
+      .main-frame { height:auto; }
+      .left-column-mobile { overflow-y:auto; height:auto; padding-bottom: 0 !important; }
+      .right-column-fixed { position:relative; height:auto; border-top:none; padding: 0 !important; }
+      .thumb-strip { display:none; }
+      .right-column-desktop { display:block; }
+      /* Ensure desktop maintains its original row/column structure using left-column-section */
+      .left-column-mobile > div { 
+          /* This resets the order properties for desktop */
+          order: 0 !important; 
+      }
+    }
+
+    /* hide webkit scrollbar optional helper */
+    .no-scrollbar::-webkit-scrollbar { display:none; }
+  </style>
+</head>
+<body class="bg-[var(--very-dark-bg)] text-[var(--text-color)] p-4 md:p-8 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-[1280px] bg-[#111111] rounded-xl p-4 shadow-xl flex flex-col overflow-hidden main-frame main-aspect-lg lg:aspect-[16/10]">
+
+    <div class="flex flex-1 flex-col lg:flex-row gap-6 min-h-full items-center justify-center">
+
+      <div class="w-full lg:w-3/5 flex flex-col items-center gap-4 pr-2 left-column-mobile">
+        
+        <div class="left-column-section w-full h-auto max-h-[200px] flex flex-wrap gap-4">
+            <div class="w-full md:w-[58%] bg-zinc-900 p-4 rounded-xl mobile-order-1">
+                <h2 class="text-xl"><span class="text-zinc-300">Hi, I'm </span><span class="text-yellow-500">Tamilkumaran Chandrasekaran.</span></h2>
+                <p class="text-sm mt-2"><span class="text-zinc- 300">Currently working as a </span><span class="text-yellow-500">Lead - Creative Studio,</span><span class="text-zinc-300"> Tag India Pvt Ltd, located at Chennai, Tamil Nadu.</span></p>
+                <p class="mt-2"><span class="text-zinc-300">I m having </span><span class="text-yellow-500">11+</span><span class="text-zinc-300"> Years of Experience</span></p>
+            </div>
+
+            <div class="w-full md:w-[30%] bg-zinc-900 p-4 rounded-xl mobile-order-2">
+                <p class="text-lg uppercase underline mb-2 text-zinc-300 text-left">SOFTWARE I USING</p>
+                <div class="software-icons relative flex flex-wrap gap-1 pr-5">
+                    <div class="software-icon-box"><img src="images/indesign.svg" alt="InDesign" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=ID'"/></div>
+                    <div class="software-icon-box"><img src="images/photoshop.svg" alt="Photoshop" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=PS'"/></div>
+                    <div class="software-icon-box"><img src="images/illustrator.svg" alt="Illustrator" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=AI'"/></div>
+                    <div class="software-icon-box"><img src="images/aftereffects.svg" alt="After Effects" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=AE'"/></div>
+                    <div class="software-icon-box"><img src="images/premierepro.svg" alt="Premiere Pro" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=PR'"/></div>
+                    <div class="software-icon-box"><img src="images/xd.svg" alt="XD" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=XD'"/></div>
+                    <div class="software-icon-box"><img src="images/figma.svg" alt="Figma" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=FG'"/></div>
+
+                    <a href="#some-target" class="absolute bottom-[10px] right-[10px] w-8 h-8 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="left-column-section w-full h-auto max-h-[200px] order-2 flex flex-wrap gap-4">
+            <div class="w-full md:w-[30%] max-h-[200px] bg-zinc-900 rounded-xl overflow-hidden mobile-order-3">
+                <img src="images/profile200.png" alt="Profile Image" class="w-full h-full object-cover object-top"/>
+            </div>
+
+            <div class="relative w-full md:w-[58%] bg-zinc-900 rounded-xl flex flex-col justify-start p-4 mobile-order-4">
+                <h4 class="text-lg uppercase underline mb-2 text-zinc-300">About</h4>
+                <p class="text-zinc-300 text-sm mb-8">Passionate about Design, Photography, Travel and Food. I always love to learn and explore new things.</p>
+
+                <a href="#some-target" class="absolute bottom-[10px] right-[10px] w-8 h-8 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="left-column-section w-full h-auto max-h-[200px] flex flex-wrap gap-4 order-4">
+            <div class="w-full md:w-[58%] bg-zinc-900 p-4 rounded-xl flex flex-col justify-center mobile-order-5">
+                <h2><span class="text-zinc-300">Have a project in mind, like to hire me or just want to say hello? Feel free to reach out!</span></h2>
+                <div class="flex items-center gap-2 mt-4">
+                    <button onclick="copyEmailToClipboard()" class="arrow-button px-4 py-2 flex items-center justify-center gap-2">
+                        <p class="text-sm mt-2">mailtamilkumaran@gmail.com</p>
+                        <svg  xmlns="http://www.w3.org/2000/svg"  width="18"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-copy"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+                            <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
+                      </button>
+                </div>
+            </div>
+
+            
+
+            <div class="w-full md:w-[30%] bg-zinc-900 p-4 rounded-xl flex flex-col mobile-order-6">
+                <div class="software-icons flex flex-wrap gap-2 justify-start relative pb-12">
+                    <div class="software-icon-box2">
+                        
+                        <svg fill="#ffffff" height="32px" width="32px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 473.806 473.806" xml:space="preserve" stroke="#ffffff">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                          <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                          <g id="SVGRepo_iconCarrier">
+                            <g>
+                              <g>
+                                <path d="M374.456,293.506c-9.7-10.1-21.4-15.5-33.8-15.5c-12.3,0-24.1,5.3-34.2,15.4l-31.6,31.5c-2.6-1.4-5.2-2.7-7.7-4 c-3.6-1.8-7-3.5-9.9-5.3c-29.6-18.8-56.5-43.3-82.3-75c-12.5-15.8-20.9-29.1-27-42.6c8.2-7.5,15.8-15.3,23.2-22.8 c2.8-2.8,5.6-5.7,8.4-8.5c21-21,21-48.2,0-69.2l-27.3-27.3c-3.1-3.1-6.3-6.3-9.3-9.5c-6-6.2-12.3-12.6-18.8-18.6 c-9.7-9.6-21.3-14.7-33.5-14.7s-24,5.1-34,14.7c-0.1,0.1-0.1,0.1-0.2,0.2l-34,34.3c-12.8,12.8-20.1,28.4-21.7,46.5 c-2.4,29.2,6.2,56.4,12.8,74.2c16.2,43.7,40.4,84.2,76.5,127.6c43.8,52.3,96.5,93.6,156.7,122.7c23,10.9,53.7,23.8,88,26 c2.1,0.1,4.3,0.2,6.3,0.2c23.1,0,42.5-8.3,57.7-24.8c0.1-0.2,0.3-0.3,0.4-0.5c5.2-6.3,11.2-12,17.5-18.1c4.3-4.1,8.7-8.4,13-12.9 c9.9-10.3,15.1-22.3,15.1-34.6c0-12.4-5.3-24.3-15.4-34.3L374.456,293.506z M410.256,398.806 C410.156,398.806,410.156,398.906,410.256,398.806c-3.9,4.2-7.9,8-12.2,12.2c-6.5,6.2-13.1,12.7-19.3,20 c-10.1,10.8-22,15.9-37.6,15.9c-1.5,0-3.1,0-4.6-0.1c-29.7-1.9-57.3-13.5-78-23.4c-56.6-27.4-106.3-66.3-147.6-115.6 c-34.1-41.1-56.9-79.1-72-119.9c-9.3-24.9-12.7-44.3-11.2-62.6c1-11.7,5.5-21.4,13.8-29.7l34.1-34.1c4.9-4.6,10.1-7.1,15.2-7.1 c6.3,0,11.4,3.8,14.6,7c0.1,0.1,0.2,0.2,0.3,0.3c6.1,5.7,11.9,11.6,18,17.9c3.1,3.2,6.3,6.4,9.5,9.7l27.3,27.3 c10.6,10.6,10.6,20.4,0,31c-2.9,2.9-5.7,5.8-8.6,8.6c-8.4,8.6-16.4,16.6-25.1,24.4c-0.2,0.2-0.4,0.3-0.5,0.5 c-8.6,8.6-7,17-5.2,22.7c0.1,0.3,0.2,0.6,0.3,0.9c7.1,17.2,17.1,33.4,32.3,52.7l0.1,0.1c27.6,34,56.7,60.5,88.8,80.8 c4.1,2.6,8.3,4.7,12.3,6.7c3.6,1.8,7,3.5,9.9,5.3c0.4,0.2,0.8,0.5,1.2,0.7c3.4,1.7,6.6,2.5,9.9,2.5c8.3,0,13.5-5.2,15.2-6.9 l34.2-34.2c3.4-3.4,8.8-7.5,15.1-7.5c6.2,0,11.3,3.9,14.4,7.3c0.1,0.1,0.1,0.1,0.2,0.2l55.1,55.1 C420.456,377.706,420.456,388.206,410.256,398.806z"/>
+                                <path d="M256.056,112.706c26.2,4.4,50,16.8,69,35.8s31.3,42.8,35.8,69c1.1,6.6,6.8,11.2,13.3,11.2c0.8,0,1.5-0.1,2.3-0.2 c7.4-1.2,12.3-8.2,11.1-15.6c-5.4-31.7-20.4-60.6-43.3-83.5s-51.8-37.9-83.5-43.3c-7.4-1.2-14.3,3.7-15.6,11 S248.656,111.506,256.056,112.706z"/>
+                                <path d="M473.256,209.006c-8.9-52.2-33.5-99.7-71.3-137.5s-85.3-62.4-137.5-71.3c-7.3-1.3-14.2,3.7-15.5,11 c-1.2,7.4,3.7,14.3,11.1,15.6c46.6,7.9,89.1,30,122.9,63.7c33.8,33.8,55.8,76.3,63.7,122.9c1.1,6.6,6.8,11.2,13.3,11.2 c0.8,0,1.5-0.1,2.3-0.2C469.556,223.306,474.556,216.306,473.256,209.006z"/>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">
+                            <path fill="#fff" d="M4.9,43.3l2.7-9.8C5.9,30.6,5,27.3,5,24C5,13.5,13.5,5,24,5c5.1,0,9.8,2,13.4,5.6	C41,14.2,43,18.9,43,24c0,10.5-8.5,19-19,19c0,0,0,0,0,0h0c-3.2,0-6.3-0.8-9.1-2.3L4.9,43.3z"></path><path fill="#fff" d="M4.9,43.8c-0.1,0-0.3-0.1-0.4-0.1c-0.1-0.1-0.2-0.3-0.1-0.5L7,33.5c-1.6-2.9-2.5-6.2-2.5-9.6	C4.5,13.2,13.3,4.5,24,4.5c5.2,0,10.1,2,13.8,5.7c3.7,3.7,5.7,8.6,5.7,13.8c0,10.7-8.7,19.5-19.5,19.5c-3.2,0-6.3-0.8-9.1-2.3	L5,43.8C5,43.8,4.9,43.8,4.9,43.8z"></path><path fill="#cfd8dc" d="M24,5c5.1,0,9.8,2,13.4,5.6C41,14.2,43,18.9,43,24c0,10.5-8.5,19-19,19h0c-3.2,0-6.3-0.8-9.1-2.3	L4.9,43.3l2.7-9.8C5.9,30.6,5,27.3,5,24C5,13.5,13.5,5,24,5 M24,43L24,43L24,43 M24,43L24,43L24,43 M24,4L24,4C13,4,4,13,4,24	c0,3.4,0.8,6.7,2.5,9.6L3.9,43c-0.1,0.3,0,0.7,0.3,1c0.2,0.2,0.4,0.3,0.7,0.3c0.1,0,0.2,0,0.3,0l9.7-2.5c2.8,1.5,6,2.2,9.2,2.2	c11,0,20-9,20-20c0-5.3-2.1-10.4-5.8-14.1C34.4,6.1,29.4,4,24,4L24,4z"></path><path fill="#40c351" d="M35.2,12.8c-3-3-6.9-4.6-11.2-4.6C15.3,8.2,8.2,15.3,8.2,24c0,3,0.8,5.9,2.4,8.4L11,33l-1.6,5.8	l6-1.6l0.6,0.3c2.4,1.4,5.2,2.2,8,2.2h0c8.7,0,15.8-7.1,15.8-15.8C39.8,19.8,38.2,15.8,35.2,12.8z"></path><path fill="#fff" fill-rule="evenodd" d="M19.3,16c-0.4-0.8-0.7-0.8-1.1-0.8c-0.3,0-0.6,0-0.9,0	s-0.8,0.1-1.3,0.6c-0.4,0.5-1.7,1.6-1.7,4s1.7,4.6,1.9,4.9s3.3,5.3,8.1,7.2c4,1.6,4.8,1.3,5.7,1.2c0.9-0.1,2.8-1.1,3.2-2.3	c0.4-1.1,0.4-2.1,0.3-2.3c-0.1-0.2-0.4-0.3-0.9-0.6s-2.8-1.4-3.2-1.5c-0.4-0.2-0.8-0.2-1.1,0.2c-0.3,0.5-1.2,1.5-1.5,1.9	c-0.3,0.3-0.6,0.4-1,0.1c-0.5-0.2-2-0.7-3.8-2.4c-1.4-1.3-2.4-2.8-2.6-3.3c-0.3-0.5,0-0.7,0.2-1c0.2-0.2,0.5-0.6,0.7-0.8	c0.2-0.3,0.3-0.5,0.5-0.8c0.2-0.3,0.1-0.6,0-0.8C20.6,19.3,19.7,17,19.3,16z" clip-rule="evenodd"></path>
+                            </svg></div>
+                        </div>
+                </div>
+            </div>
+
+      </div> <div class="w-full lg:w-2/5 h-full flex justify-center items-start relative">
+
+        <div class="right-column-desktop hidden lg:block h-full overflow-y-auto pr-2">
+            <div class="scroll-container h-full overflow-hidden relative">
+                <div class="scroll-auto-vertical flex flex-col gap-4">
+                  
+                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/a8d35f205485403.66bbbb62086a8.jpg" class="w-full rounded-lg">
+                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/24dd58147354661.62c10c60e73b9.jpg" class="w-full rounded-lg">
+                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/db64b0147361583.62c14c2f79be8.png" class="w-full rounded-lg">
+                  <img src="https://placehold.co/315x230" class="w-full rounded-lg">
+              
+                  <img src="https://placehold.co/315x230" class="w-full rounded-lg">
+                  <img src="https://placehold.co/315x230" class="w-full rounded-lg">
+                  <img src="https://placehold.co/315x230" class="w-full rounded-lg">
+                  <img src="https://placehold.co/315x230" class="w-full rounded-lg">
+          </div>
+          </div>
+        </div>
+
+        <div class="right-column-fixed lg:hidden no-scrollbar">
+          <div id="thumbTrack" class="thumb-strip thumb-auto">
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/a8d35f205485403.66bbbb62086a8.jpg" class="w-full rounded-lg">
+                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/24dd58147354661.62c10c60e73b9.jpg" class="w-full rounded-lg">
+                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/db64b0147361583.62c14c2f79be8.png" class="w-full rounded-lg">
+            <img src="https://placehold.co/200x140" alt="thumb4">
+            <img src="https://placehold.co/200x140" alt="thumb5">
+            <img src="https://placehold.co/200x140" alt="thumb1">
+            <img src="https://placehold.co/200x140" alt="thumb2">
+            <img src="https://placehold.co/200x140" alt="thumb3">
+            <img src="https://placehold.co/200x140" alt="thumb4">
+            <img src="https://placehold.co/200x140" alt="thumb5">
+          </div>
+        </div>
+
+      </div> </div>
+  </div>
+
+  <script>
+    // copy email function (keeps original behavior)
+    function copyEmailToClipboard() {
+      const email = "mailtamilkumaran@gmail.com";
+      const el = document.createElement('textarea');
+      el.value = email;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      const btn = document.querySelector('.arrow-button');
+      if (!btn) return;
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Copied';
+      setTimeout(()=> btn.innerHTML = orig, 1200);
+    }
+
+    // Pause auto animation while user touches the track (improves swipe)
+    (function () {
+      const track = document.getElementById('thumbTrack');
+      if (!track) return;
+      let touching = false;
+      track.addEventListener('pointerdown', () => { touching = true; track.classList.add('touching'); }, {passive:true});
+      window.addEventListener('pointerup', () => { touching = false; track.classList.remove('touching'); });
+      window.addEventListener('pointercancel', () => { touching = false; track.classList.remove('touching'); });
+      track.addEventListener('mouseenter', ()=> track.classList.add('touching'));
+      track.addEventListener('mouseleave', ()=> track.classList.remove('touching'));
+    })();
+  </script>
+
+</body>
+</html>
