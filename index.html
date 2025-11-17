@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tamilkumaran Chandrasekaran-Portfolio</title>
+  <title>Tamilkumaran Chandrasekaran - Portfolio</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Custom colors for a consistent theme */
@@ -33,9 +33,9 @@
     .arrow-circle:hover { background-color:#4A4A4A; }
     .arrow-circle svg { width:16px; height:16px; }
 
-    .software-icon-box { background-color: var(--dark-bg); color: var(--text-color); font-size: .875rem; font-weight:500; display:flex; align-items:center; justify-content:center; padding:6px; border-radius:8px; width:36px; height:36px; }
+    .software-icon-box { background-color: var(--accent-yellow); color: var(--text-color); font-size: .875rem; font-weight:500; display:flex; justify-content:left; align-items:left; border-radius:4px; width:24px; height:24px; }
     .software-icon-box img { width:24px; height:24px; object-fit:contain; }
-    .software-icon-box2 { background-color: var(--dark-bg); color: var(--text-color); font-size:.875rem; font-weight:500; display:flex; padding:10px; align-items:center; justify-content:center; border-radius:8px; }
+    .software-icon-box2 { background-color: var(--dark-bg); color: var(--text-color); font-size:.875rem; font-weight:500; display:flex; border-radius:8px; }
     .software-icon-box2 img { width:57px; height:57px; object-fit:contain; }
 
     /* Original vertical scroll animation (desktop) */
@@ -156,36 +156,46 @@
                 <p class="mt-2"><span class="text-zinc-300">I m having </span><span class="text-yellow-500">11+</span><span class="text-zinc-300"> Years of Experience</span></p>
             </div>
 
-            <div class="w-full md:w-[30%] bg-zinc-900 p-4 rounded-xl mobile-order-2">
-                <p class="text-lg uppercase underline mb-2 text-zinc-300 text-left">SOFTWARE I USING</p>
-                <div class="software-icons relative flex flex-wrap gap-1 pr-5">
-                    <div class="software-icon-box"><img src="images/indesign.svg" alt="InDesign" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=ID'"/></div>
-                    <div class="software-icon-box"><img src="images/photoshop.svg" alt="Photoshop" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=PS'"/></div>
-                    <div class="software-icon-box"><img src="images/illustrator.svg" alt="Illustrator" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=AI'"/></div>
-                    <div class="software-icon-box"><img src="images/aftereffects.svg" alt="After Effects" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=AE'"/></div>
-                    <div class="software-icon-box"><img src="images/premierepro.svg" alt="Premiere Pro" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=PR'"/></div>
-                    <div class="software-icon-box"><img src="images/xd.svg" alt="XD" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=XD'"/></div>
-                    <div class="software-icon-box"><img src="images/figma.svg" alt="Figma" onerror="this.onerror=null;this.src='https://placehold.co/24x24?text=FG'"/></div>
-
-                    <a href="#some-target" class="absolute bottom-[10px] right-[10px] w-8 h-8 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
+            <div class="w-full md:w-[30%] bg-zinc-900 p-4 rounded-xl flex flex-col justify-start relative mobile-order-2">
+    
+              <p class="text-lg underline mb-2 text-zinc-300 text-left">Software i'm using</p>
+          
+              <!-- ICONS WRAPPER (NOT RELATIVE) -->
+              <div class="software-icons flex flex-wrap gap-1 pr-5">
+                  <div class="software-icon-box"><img src="images/indesign.svg" alt="InDesign"/></div>
+                  <div class="software-icon-box"><img src="images/photoshop.svg" alt="Photoshop"/></div>
+                  <div class="software-icon-box"><img src="images/illustrator.svg" alt="Illustrator"/></div>
+                  <div class="software-icon-box"><img src="images/aftereffects.svg" alt="After Effects"/></div>
+                  <div class="software-icon-box"><img src="images/premierepro.svg" alt="Premiere Pro"/></div>
+                  <div class="software-icon-box"><img src="images/xd.svg" alt="XD"/></div>
+                  <div class="software-icon-box"><img src="images/figma.svg" alt="Figma"/></div>
+              </div>
+          
+              <!-- ARROW BUTTON (ABSOLUTE TO OUTER CARD) -->
+              <a href="#some-target" 
+              class="absolute bottom-[10px] right-[10px] w-8 h-8 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+              </a>
+          
+          </div>
+          </div>
+          
         
         <div class="left-column-section w-full h-auto max-h-[200px] order-2 flex flex-wrap gap-4">
             <div class="w-full md:w-[30%] max-h-[200px] bg-zinc-900 rounded-xl overflow-hidden mobile-order-3">
                 <img src="images/profile200.png" alt="Profile Image" class="w-full h-full object-cover object-top"/>
             </div>
-
+         
+            <!-- ICONS WRAPPER (NOT RELATIVE) -->
             <div class="relative w-full md:w-[58%] bg-zinc-900 rounded-xl flex flex-col justify-start p-4 mobile-order-4">
-                <h4 class="text-lg uppercase underline mb-2 text-zinc-300">About</h4>
+                <h4 class="text-lg underline mb-2 text-zinc-300">About</h4>
                 <p class="text-zinc-300 text-sm mb-8">Passionate about Design, Photography, Travel and Food. I always love to learn and explore new things.</p>
-
-                <a href="#some-target" class="absolute bottom-[10px] right-[10px] w-8 h-8 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition">
+              
+                <!-- ARROW BUTTON (ABSOLUTE TO OUTER CARD) -->
+                <a href="#some-target" 
+                  class="absolute bottom-[10px] right-[10px] w-8 h-8 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
