@@ -11,111 +11,154 @@
     --bg: #0e0e0e; --bg2: #161616; --bg3: #1e1e1e;
     --accent: #c8f04d; --accent2: #f0c04d;
     --text: #f0ede6; --muted: #888; --border: rgba(255,255,255,0.08);
+    --nav-h: 64px;
   }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; background: rgba(14,14,14,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem; height: var(--nav-h);
+    background: rgba(14,14,14,0.9); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
   .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
   .nav-cta { display: inline-flex; align-items: center; background: var(--accent); color: #0e0e0e; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.82rem; padding: 0.5rem 1.2rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s; }
   .nav-cta:hover { opacity: 0.85; }
 
-  .hero-wrap { height: calc(100vh - 72px); display: flex; align-items: center; overflow: hidden; }
-  .hero { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 3rem; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 3rem; }
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 36px; height: 36px; cursor: pointer; background: none;
+    border: 1px solid var(--border); border-radius: 6px; padding: 6px;
+  }
+  .hamburger span {
+    display: block; height: 1.5px; background: var(--text);
+    border-radius: 2px; transition: all 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Mobile drawer */
+  .mobile-menu {
+    display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+    background: rgba(14,14,14,0.97); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 190; padding: 1.5rem 2rem 2rem;
+    flex-direction: column; gap: 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--text); text-decoration: none;
+    font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700;
+    padding: 0.75rem 0; border-bottom: 1px solid var(--border);
+    transition: color 0.2s;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-menu .mob-cta {
+    margin-top: 1.2rem; display: inline-flex; background: var(--accent);
+    color: #0e0e0e; padding: 0.75rem 1.5rem; border-radius: 2rem;
+    font-size: 0.9rem; font-weight: 600; text-align: center;
+    justify-content: center; border-bottom: none;
+  }
+
+  /* ── HERO (desktop: side by side, fits viewport) ── */
+  .hero-section {
+    height: calc(100vh - var(--nav-h));
+    margin-top: var(--nav-h);
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .hero {
+    width: 100%; max-width: 1200px; margin: 0 auto;
+    padding: 0 3rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 3rem;
+  }
   .hero-eyebrow { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
   .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);} }
-  .eyebrow-text { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem,4.2vw,4.2rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 1rem; }
+  .eyebrow-text { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem,4vw,4.2rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 1rem; }
   .hero h1 .accent { color: var(--accent); }
-  .hero-desc { color: var(--muted); font-size: 1.05rem; line-height: 1.8; max-width: 440px; margin-bottom: 1rem; }
-  .hero-actions { display: flex; gap: 1rem; align-items: center; }
-  .btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent); color: #0e0e0e; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.85rem 1.8rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s, transform 0.15s; }
+  .hero-desc { color: var(--muted); font-size: 0.97rem; line-height: 1.78; max-width: 420px; margin-bottom: 1.5rem; }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent); color: #0e0e0e; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; padding: 0.8rem 1.6rem; border-radius: 2rem; text-decoration: none; transition: opacity 0.2s, transform 0.15s; }
   .btn:hover { opacity: 0.88; transform: translateY(-1px); }
   .btn-ghost { background: transparent; color: var(--muted); font-size: 0.88rem; padding: 0; border-radius: 0; border-bottom: 1px solid var(--border); transition: color 0.2s, border-color 0.2s; }
   .btn-ghost:hover { color: var(--text); border-color: var(--muted); transform: none; }
-  .hero-stats { display: flex; gap: 2.5rem; margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-  .stat-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; line-height: 1; }
+  .hero-stats { display: flex; gap: 2rem; margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 1.7rem; font-weight: 800; line-height: 1; }
   .stat-num span { color: var(--accent); }
-  .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.2rem; }
-  .hero-right { position: relative; display: flex; justify-content: center; }
-  .profile-card { width: 100%; max-width: 420px; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; background: var(--bg2); }
-  .profile-img { width: 100%; height: min(40vh, 380px); object-fit: cover; object-position: top center; display: block; filter: grayscale(15%); }
-  .profile-card-footer { padding: 1.25rem 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  .pcf-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; }
-  .pcf-role { font-size: 0.8rem; color: var(--muted); }
-  .avail-badge { display: flex; align-items: center; gap: 0.4rem; background: rgba(200,240,77,0.1); border: 1px solid rgba(200,240,77,0.2); border-radius: 2rem; padding: 0.3rem 0.75rem; font-size: 0.72rem; color: var(--accent); }
+  .stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 0.2rem; }
+
+  /* Profile card */
+  .hero-right { position: relative; display: flex; justify-content: center; align-items: center; }
+  .profile-card { width: 100%; max-width: 380px; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: var(--bg2); }
+  .profile-img {
+    width: 100%;
+    /* Desktop: scale image to fit hero without overflow */
+    height: min(52vh, 420px);
+    object-fit: cover; object-position: top center;
+    display: block; filter: grayscale(15%);
+  }
+  .profile-card-footer { padding: 1rem 1.25rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .pcf-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; }
+  .pcf-role { font-size: 0.75rem; color: var(--muted); }
+  .avail-badge { display: flex; align-items: center; gap: 0.4rem; background: rgba(200,240,77,0.1); border: 1px solid rgba(200,240,77,0.2); border-radius: 2rem; padding: 0.3rem 0.75rem; font-size: 0.7rem; color: var(--accent); white-space: nowrap; }
   .avail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-  .floating-tag { position: absolute; top: 1.5rem; right: -1rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 0.7rem 1rem; }
+  .floating-tag { position: absolute; top: 1.5rem; right: -0.5rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 0.7rem 1rem; }
   .ft-num { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--accent2); line-height: 1; }
   .ft-label { color: var(--muted); font-size: 0.7rem; margin-top: 0.1rem; }
 
+  /* ── TICKER ── */
   .ticker-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 0.85rem 0; background: var(--bg2); }
   .ticker-track { display: flex; gap: 3rem; animation: ticker 22s linear infinite; width: max-content; }
   @keyframes ticker { from{transform:translateX(0);}to{transform:translateX(-50%);} }
-  .ticker-item { white-space: nowrap; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 1rem; }
-  .ticker-item span { color: var(--accent); font-size: 0.6rem; }
+  .ticker-item { white-space: nowrap; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 1rem; }
+  .ticker-item span { color: var(--accent); font-size: 0.55rem; }
 
+  /* ── SECTIONS ── */
   .section { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; }
   .section-label { font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin-bottom: 0.8rem; }
   .section-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem,3vw,2.4rem); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 2.5rem; }
 
-  /* ── BRAND LOGO GRID ── */
-  .clients-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px; background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 4px; overflow: hidden;
-  }
-  .client-cell {
-    background: var(--bg2);
-    padding: 2rem 1.75rem;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.9rem; min-height: 130px;
-    transition: background 0.25s;
-    cursor: default;
-  }
+  /* CLIENTS GRID */
+  .clients-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .client-cell { background: var(--bg2); padding: 2rem 1.75rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem; min-height: 120px; transition: background 0.25s; }
   .client-cell:hover { background: var(--bg3); }
-
-  /* SVG logos — white at 45% opacity, brighten on hover */
-  .brand-svg {
-    height: 28px; width: auto; max-width: 120px;
-    fill: #fff; opacity: 0.45;
-    transition: opacity 0.25s;
-    display: block;
-  }
+  .brand-svg { height: 26px; width: auto; max-width: 120px; fill: #fff; opacity: 0.45; transition: opacity 0.25s; display: block; }
   .client-cell:hover .brand-svg { opacity: 0.9; }
-
-  .client-sector {
-    font-size: 0.67rem; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.1em;
-    text-align: center;
-  }
+  .client-sector { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; }
 
   /* MARQUEE */
   .work-marquee { overflow: hidden; padding: 3rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .work-track { display: flex; gap: 1.5rem; animation: marquee 30s linear infinite; width: max-content; }
   @keyframes marquee { from{transform:translateX(0);}to{transform:translateX(-50%);} }
-  .work-img { width: 300px; height: 200px; object-fit: cover; border-radius: 4px; filter: grayscale(30%); transition: filter 0.3s; flex-shrink: 0; }
+  .work-img { width: 280px; height: 190px; object-fit: cover; border-radius: 4px; filter: grayscale(30%); transition: filter 0.3s; flex-shrink: 0; }
   .work-img:hover { filter: grayscale(0%); }
 
   /* SKILLS */
   .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
   .skill-list { display: flex; flex-direction: column; }
-  .skill-row { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+  .skill-row { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
   .skill-row:first-child { border-top: 1px solid var(--border); }
-  .skill-tag { font-size: 0.7rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 2rem; padding: 0.2rem 0.65rem; color: var(--muted); }
+  .skill-tag { font-size: 0.68rem; background: var(--bg3); border: 1px solid var(--border); border-radius: 2rem; padding: 0.2rem 0.65rem; color: var(--muted); }
   .tools-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; border: 1px solid var(--border); background: var(--border); border-radius: 4px; overflow: hidden; }
   .tool-cell { background: var(--bg2); padding: 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.6rem; transition: background 0.2s; }
   .tool-cell:hover { background: var(--bg3); }
-  .tool-cell img { width: 36px; height: 36px; object-fit: contain; }
-  .tool-cell span { font-size: 0.72rem; color: var(--muted); }
+  .tool-cell img { width: 34px; height: 34px; object-fit: contain; }
+  .tool-cell span { font-size: 0.7rem; color: var(--muted); }
 
+  /* EXP */
   .exp-strip { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .exp-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem; }
   .exp-list { display: flex; flex-direction: column; }
@@ -127,12 +170,13 @@
   .exp-company { font-size: 0.85rem; color: var(--muted); margin-top: 0.1rem; }
   .exp-badge { font-size: 0.68rem; border: 1px solid var(--border); border-radius: 2rem; padding: 0.2rem 0.7rem; color: var(--muted); white-space: nowrap; }
 
+  /* CONTACT BANNER */
   .contact-banner { max-width: 1100px; margin: 0 auto; padding: 6rem 3rem; text-align: center; }
-  .contact-banner h2 { font-family: 'Syne', sans-serif; font-size: clamp(2.5rem,5vw,4rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; margin-bottom: 1.2rem; }
+  .contact-banner h2 { font-family: 'Syne', sans-serif; font-size: clamp(2.2rem,4.5vw,3.8rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; margin-bottom: 1.2rem; }
   .contact-banner h2 em { color: var(--accent); font-style: normal; }
   .contact-banner p { color: var(--muted); font-size: 1rem; margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .contact-link { display: flex; align-items: center; gap: 0.5rem; background: var(--bg2); border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 0.85rem; padding: 0.6rem 1.2rem; border-radius: 2rem; transition: all 0.2s; }
+  .contact-links { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .contact-link { display: flex; align-items: center; gap: 0.5rem; background: var(--bg2); border: 1px solid var(--border); color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 0.55rem 1.1rem; border-radius: 2rem; transition: all 0.2s; }
   .contact-link:hover { border-color: var(--accent); color: var(--accent); }
 
   footer { border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; }
@@ -145,23 +189,63 @@
   .fu{animation:fadeUp .8s cubic-bezier(.22,1,.36,1) both;}
   .fu1{animation-delay:.05s;}.fu2{animation-delay:.15s;}.fu3{animation-delay:.25s;}.fu4{animation-delay:.35s;}.fu5{animation-delay:.45s;}
 
-  @media(max-width:900px){
-    nav{padding:1rem 1.5rem;}.nav-links{display:none;}
-    .hero{grid-template-columns:1fr;padding:7rem 1.5rem 4rem;min-height:auto;}
-    .hero-right{order:-1;}.profile-img{height:320px;}.floating-tag{display:none;}
-    .section{padding:3rem 1.5rem;}
-    .clients-grid{grid-template-columns:repeat(2,1fr);}
-    .skills-grid{grid-template-columns:1fr;}
-    .exp-item{grid-template-columns:1fr;gap:.3rem;}
-    .exp-item:hover{margin:0;padding:1.5rem 0;}.exp-badge{display:none;}
-    .exp-inner{padding:3rem 1.5rem;}
-    .contact-banner{padding:4rem 1.5rem;}
-    footer{flex-direction:column;gap:1rem;padding:2rem 1.5rem;}
+  /* ── MOBILE ── */
+  @media(max-width:768px){
+    :root { --nav-h: 60px; }
+
+    /* Show hamburger, hide desktop links + cta */
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+
+    /* Hero: stack vertically, auto height, scroll naturally */
+    .hero-section {
+      height: auto;
+      padding: 2rem 0 0;
+      align-items: flex-start;
+    }
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 0 1.5rem 2rem;
+      gap: 2rem;
+    }
+    /* Image on top, text below */
+    .hero-right { order: -1; }
+
+    /* Full-width image, natural height, NO fixed height that causes crop */
+    .profile-card { max-width: 100%; }
+    .profile-img {
+      height: auto;
+      max-height: 70vw;
+      width: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .floating-tag { display: none; }
+    .hero h1 { font-size: clamp(2.4rem,9vw,3.2rem); }
+    .hero-desc { font-size: 0.95rem; }
+    .hero-stats { gap: 1.5rem; }
+    .stat-num { font-size: 1.4rem; }
+
+    .section { padding: 3rem 1.5rem; }
+    .clients-grid { grid-template-columns: repeat(2,1fr); }
+    .skills-grid { grid-template-columns: 1fr; }
+
+    .exp-item { grid-template-columns: 1fr; gap: 0.3rem; }
+    .exp-item:hover { margin: 0; padding: 1.5rem 0; }
+    .exp-badge { display: none; }
+    .exp-inner { padding: 3rem 1.5rem; }
+
+    .contact-banner { padding: 4rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; text-align: center; }
+    .footer-right { flex-wrap: wrap; justify-content: center; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">TC.</a>
   <ul class="nav-links">
@@ -171,11 +255,26 @@
     <li><a href="services.html">Services</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="contact.html" class="nav-cta">Hire Me</a>
+  <div class="nav-right">
+    <a href="contact.html" class="nav-cta">Hire Me</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
+<!-- MOBILE DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="mob-cta">Hire Me →</a>
+</div>
+
 <!-- HERO -->
-<section class="hero-wrap">
+<section class="hero-section">
   <div class="hero">
     <div>
       <div class="hero-eyebrow fu fu1"><div class="eyebrow-dot"></div><span class="eyebrow-text">Available for freelance projects</span></div>
@@ -212,128 +311,27 @@
   </div>
 </div>
 
-<!-- CLIENTS – inline SVG logos -->
+<!-- CLIENTS -->
 <section class="section">
   <div class="section-label">Enterprise Clients</div>
   <h2 class="section-title">Brands I've worked with</h2>
   <div class="clients-grid">
-
-    <!-- Pfizer -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="26" fill="currentColor">Pfizer</text>
-      </svg>
-      <div class="client-sector">Healthcare / Pharma</div>
-    </div>
-
-    <!-- Citibank -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 120 36" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="26" font-family="Arial,sans-serif" font-weight="400" font-size="24" fill="currentColor">citi</text>
-        <!-- red arc accent -->
-        <path d="M57 6 Q70 0 83 6" stroke="#e31837" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      </svg>
-      <div class="client-sector">Banking</div>
-    </div>
-
-    <!-- Voya Financial -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 130 34" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="24" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="currentColor">VOYA</text>
-        <text x="66" y="24" font-family="Arial,sans-serif" font-weight="300" font-size="13" fill="currentColor">Financial</text>
-      </svg>
-      <div class="client-sector">Financial Services</div>
-    </div>
-
-    <!-- Zurich -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 120 36" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="4" width="28" height="28" rx="2" fill="currentColor" opacity="0.9"/>
-        <text x="5" y="24" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="#0e0e0e">Z</text>
-        <text x="34" y="24" font-family="Arial,sans-serif" font-weight="600" font-size="18" fill="currentColor">Zurich</text>
-      </svg>
-      <div class="client-sector">Insurance</div>
-    </div>
-
-    <!-- DHL -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 90 36" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="2" width="90" height="32" rx="2" fill="currentColor" opacity="0.15"/>
-        <text x="8" y="26" font-family="Arial,sans-serif" font-weight="900" font-size="26" fill="currentColor" letter-spacing="2">DHL</text>
-      </svg>
-      <div class="client-sector">Logistics</div>
-    </div>
-
-    <!-- Schneider Electric -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="6" width="26" height="24" rx="3" fill="currentColor" opacity="0.9"/>
-        <text x="4" y="24" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#0e0e0e">SE</text>
-        <text x="32" y="22" font-family="Arial,sans-serif" font-weight="700" font-size="12" fill="currentColor">Schneider</text>
-        <text x="32" y="34" font-family="Arial,sans-serif" font-weight="300" font-size="11" fill="currentColor">Electric</text>
-      </svg>
-      <div class="client-sector">Energy / Industrial</div>
-    </div>
-
-    <!-- PwC -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 80 36" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="28" font-family="Arial,sans-serif" font-weight="300" font-size="32" fill="currentColor">PwC</text>
-      </svg>
-      <div class="client-sector">Professional Services</div>
-    </div>
-
-    <!-- Citizens Financial -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="14" cy="18" r="12" fill="currentColor" opacity="0.85"/>
-        <text x="6" y="23" font-family="Arial,sans-serif" font-weight="900" font-size="13" fill="#0e0e0e">C</text>
-        <text x="32" y="22" font-family="Arial,sans-serif" font-weight="600" font-size="12" fill="currentColor">Citizens</text>
-        <text x="32" y="34" font-family="Arial,sans-serif" font-weight="300" font-size="11" fill="currentColor">Financial</text>
-      </svg>
-      <div class="client-sector">Banking &amp; Finance</div>
-    </div>
-
-    <!-- Daily Mail -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="24" font-family="Georgia,serif" font-weight="700" font-size="15" fill="currentColor">Daily Mail</text>
-        <text x="0" y="35" font-family="Arial,sans-serif" font-weight="300" font-size="10" fill="currentColor" opacity="0.6">UK</text>
-      </svg>
-      <div class="client-sector">Publishing / Media</div>
-    </div>
-
-    <!-- Union Bank -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
-        <rect x="0" y="5" width="24" height="24" rx="12" fill="currentColor" opacity="0.9"/>
-        <text x="6" y="22" font-family="Arial,sans-serif" font-weight="900" font-size="13" fill="#0e0e0e">U</text>
-        <text x="30" y="22" font-family="Arial,sans-serif" font-weight="600" font-size="14" fill="currentColor">Union Bank</text>
-      </svg>
-      <div class="client-sector">Banking</div>
-    </div>
-
-    <!-- Pearson -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 120 36" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="currentColor">Pearson</text>
-      </svg>
-      <div class="client-sector">Education Publishing</div>
-    </div>
-
-    <!-- McGraw-Hill -->
-    <div class="client-cell">
-      <svg class="brand-svg" viewBox="0 0 140 36" xmlns="http://www.w3.org/2000/svg">
-        <text x="0" y="20" font-family="Arial,sans-serif" font-weight="700" font-size="14" fill="currentColor">McGraw</text>
-        <text x="0" y="34" font-family="Arial,sans-serif" font-weight="300" font-size="14" fill="currentColor">Hill</text>
-      </svg>
-      <div class="client-sector">Education Publishing</div>
-    </div>
-
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 80 20"><text x="0" y="16" font-family="Arial,sans-serif" font-weight="700" font-size="17" fill="currentColor">Pfizer</text></svg><div class="client-sector">Healthcare / Pharma</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 60 20"><text x="0" y="16" font-family="Arial,sans-serif" font-weight="400" font-size="17" fill="currentColor">citi</text><path d="M42 3 Q52 0 62 3" stroke="#e31837" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><div class="client-sector">Banking</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 100 20"><text x="0" y="15" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="currentColor">VOYA</text><text x="48" y="15" font-family="Arial,sans-serif" font-weight="300" font-size="10" fill="currentColor">Financial</text></svg><div class="client-sector">Financial Services</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 100 20"><rect x="0" y="2" width="18" height="16" rx="2" fill="currentColor" opacity="0.9"/><text x="3" y="14" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="#0e0e0e">Z</text><text x="23" y="14" font-family="Arial,sans-serif" font-weight="600" font-size="13" fill="currentColor">Zurich</text></svg><div class="client-sector">Insurance</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 70 20"><text x="0" y="16" font-family="Arial,sans-serif" font-weight="900" font-size="18" fill="currentColor" letter-spacing="2">DHL</text></svg><div class="client-sector">Logistics</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 120 20"><rect x="0" y="3" width="18" height="14" rx="2" fill="currentColor" opacity="0.9"/><text x="2" y="14" font-family="Arial,sans-serif" font-weight="900" font-size="10" fill="#0e0e0e">SE</text><text x="24" y="12" font-family="Arial,sans-serif" font-weight="700" font-size="9" fill="currentColor">Schneider</text><text x="24" y="20" font-family="Arial,sans-serif" font-weight="300" font-size="9" fill="currentColor">Electric</text></svg><div class="client-sector">Energy</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 55 20"><text x="0" y="16" font-family="Arial,sans-serif" font-weight="300" font-size="18" fill="currentColor">PwC</text></svg><div class="client-sector">Professional Services</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 110 20"><circle cx="10" cy="10" r="9" fill="currentColor" opacity="0.85"/><text x="5" y="14" font-family="Arial,sans-serif" font-weight="900" font-size="10" fill="#0e0e0e">C</text><text x="24" y="12" font-family="Arial,sans-serif" font-weight="600" font-size="9" fill="currentColor">Citizens</text><text x="24" y="20" font-family="Arial,sans-serif" font-weight="300" font-size="9" fill="currentColor">Financial</text></svg><div class="client-sector">Banking &amp; Finance</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 90 20"><text x="0" y="14" font-family="Georgia,serif" font-weight="700" font-size="12" fill="currentColor">Daily Mail</text><text x="0" y="20" font-family="Arial,sans-serif" font-weight="300" font-size="8" fill="currentColor" opacity="0.6">UK</text></svg><div class="client-sector">Publishing / Media</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 110 20"><circle cx="10" cy="10" r="9" fill="currentColor" opacity="0.85"/><text x="5" y="14" font-family="Arial,sans-serif" font-weight="900" font-size="10" fill="#0e0e0e">U</text><text x="24" y="14" font-family="Arial,sans-serif" font-weight="600" font-size="11" fill="currentColor">Union Bank</text></svg><div class="client-sector">Banking</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 90 20"><text x="0" y="16" font-family="Arial,sans-serif" font-weight="700" font-size="15" fill="currentColor">Pearson</text></svg><div class="client-sector">Education</div></div>
+    <div class="client-cell"><svg class="brand-svg" viewBox="0 0 100 20"><text x="0" y="13" font-family="Arial,sans-serif" font-weight="700" font-size="11" fill="currentColor">McGraw</text><text x="0" y="20" font-family="Arial,sans-serif" font-weight="300" font-size="10" fill="currentColor">Hill</text></svg><div class="client-sector">Education</div></div>
   </div>
 </section>
 
-<!-- MARQUEE WORK -->
+<!-- MARQUEE -->
 <div class="work-marquee">
   <div class="work-track">
     <img class="work-img" src="https://mir-s3-cdn-cf.behance.net/project_modules/fs/a8d35f205485403.66bbbb62086a8.jpg" alt="work">
@@ -427,5 +425,20 @@
   </div>
 </footer>
 
+<script>
+  const btn = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('open');
+    menu.classList.toggle('open');
+  });
+  // Close menu when a link is tapped
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      btn.classList.remove('open');
+      menu.classList.remove('open');
+    });
+  });
+</script>
 </body>
 </html>
